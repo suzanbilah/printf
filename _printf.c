@@ -8,8 +8,8 @@
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
 	int output = 0;
+	va_list args;
 
 	va_start(args, format);
 
@@ -25,6 +25,18 @@ int _printf(const char *format, ...)
 				case 's':
 					break;
 				case '%':
+					break;
+				case 'b':
+				{
+					unsigned int num = va_arg(args, unsigned int);
+					int binary = sizeof(unsigned int) * 8;
+
+					for (int i = binary - 1; i >= 0; ++i)
+					{
+						putchar((num & (1 << i)) ? '1' : '0');
+						output++;
+					}
+				}
 					break;
 				default:
 					putchar('%');
@@ -42,5 +54,6 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
+
 	return (output);
 }
