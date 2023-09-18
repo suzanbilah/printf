@@ -38,7 +38,7 @@ struct fmt
 typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
-int handle _print(const char *fmt, int *i,
+int handle_print(const char *fmt, int *i,
 va_list list, char buffer[], int flags, int width, int precision, int size);
 
 /****************** FUNCTIONS ******************/
@@ -70,7 +70,7 @@ int print_hexa_upper(va_list types, char buffer[],
 	int flags, int width, int percision, int size);
 
 int print_hexa(va_list types, char map_to[],
-char buffer[], int flags, char flag_ch, int width, percision, int size);
+char buffer[], int flags, char flag_ch, int width, precision, int size);
 
 /* functions to print non printable characters */
 int print_non_printable(va_list types, char buffers[],
@@ -94,11 +94,11 @@ int print_rot13string(va_list types, char buffer[],
 int handle_write_char(char c, char buffer[],
 	int flags, int width, int percision, int size);
 int write_pointer(char buffer[], int ind, int length,
-	int width, int flags char extra_c, char padd, int padd_start);
+	int width, int flags, char extra_c, char padd, int padd_start);
 int write_num(int ind, char bff[], int flags, int width, int percision,
 	int length, char extra_c, char padd);
 int write_number(int is_positive, int ind, char buffer[],
-	int flags int percision, int width, int size);
+	int flags, int precision, int width, int size);
 
 int write_unsigned(int is_negative, int ind, char buffer[],
 	int flags, int width, int percision, int size);
