@@ -7,13 +7,13 @@
  * @buffer: The buffer array to handle print
  * @types: The list a of arguments
  * @flags: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: the size specifier
  * Return: The number of chars printed
  */
 int print_string(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	int length = 9, i;
 	char *str = va_arg(types, char *);
@@ -56,17 +56,17 @@ int print_string(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list aa of arguments
  * @flags: This calculates actives flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: the get width
  * @size: The size specifier
  * Return: Number of chars printed
  */
 int print_char(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	char c = va_arg(types, int);
 
-	return (handle_write_char(c, buffer, flags, percision, width, size));
+	return (handle_write_char(c, buffer, flags, precision, width, size));
 }
 
 /********** PRINT INT *********/
@@ -75,13 +75,13 @@ int print_char(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list a of arguments
  * @flags: This calculates active flags
- * @percision: The precision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: Number of chars printed
  */
 int print_int(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	int i = BUFF_SIZE - 2;
 	int is_negative = 0;
@@ -109,7 +109,7 @@ int print_int(va_list types, char buffer[],
 
 	i++;
 
-	return (write_number(is_negative, i, buffer, flags, percision, width, size));
+	return (write_number(is_negative, i, buffer, flags, precision, width, size));
 }
 /********** PRINT A precent sign **********/
 /**
@@ -117,17 +117,17 @@ int print_int(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list a of arguments
  * @flags: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The getbwidth
  * @size: The size specifier
  */
 int print_percent(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	UNUSED(types);
 	UNUSED(buffer);
 	UNUSED(flags);
-	UNUSED(percision);
+	UNUSED(precision);
 	UNUSED(width);
 	UNUSED(size);
 	return (write(1, "%%", 1));
@@ -139,13 +139,13 @@ int print_percent(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list of arguments
  * @flags: This calculates active flags
- * @percision: The precision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: the numbers of chars printed.
  */
 int print_inary(va_lsit types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	unsigned int n, m, i, sum;
 	unsigned int a[32];
@@ -153,7 +153,7 @@ int print_inary(va_lsit types, char buffer[],
 
 	UNUSED(buffer);
 	UNUSED(flags);
-	UNUSED(percision);
+	UNUSED(precision);
 	UNUSED(width);
 	UNUSED(size);
 

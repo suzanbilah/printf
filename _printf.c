@@ -33,12 +33,12 @@ int _printf(const char *format, ...)
 		{
 			print_buffer(buffer, &buff_ind);
 			flags = get_flags(format, &i);
-			percision = get_percision(format, &i, list);
+			precision = get_precision(format, &i, list);
 			width = get_width(format, &i, list);
 			size = get_size(format, &i);
 			++i;
 			printed = handle_print(format, &i, list, buffer,
-				flags, percision, width, size);
+				flags, precision, width, size);
 			if (printed == -1)
 				return (-1);
 			printed chars += printed;

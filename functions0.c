@@ -6,13 +6,13 @@
  * @buffer: The buffer array to handle print
  * @types: The list a of arguments
  * @flags: This calculates teh active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: The number of chars printed
  */
 int print_unsigned(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
@@ -32,7 +32,7 @@ int print_unsigned(va_list types, char buffer[],
 
 	i++;
 
-	return (write_unsgnd(0, i, buffer, flags, percision, width, size));
+	return (write_unsgnd(0, i, buffer, flags, precision, width, size));
 }
 
 /********** PRINT AN UNSIGNED NUMBER IN OCTAL **********/
@@ -41,14 +41,14 @@ int print_unsigned(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list of arguments
  * @flags: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifer
  * Return: The number of char printed
  *
  */
 int print_octal(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 
 	int i = BUFF_SIZE - 2;
@@ -75,7 +75,7 @@ int print_octal(va_list types, char buffer[],
 
 	i++;
 
-	return (write_unsgnd(0, i, buffer, flags, percision, width, size));
+	return (write_unsgnd(0, i, buffer, flags, precision, width, size));
 }
 
 /********** PRINT AN UNSIGNED NUMBER IN HEXADECIMAL **********/
@@ -85,16 +85,16 @@ int print_octal(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list of argument
  * @flags: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: number of chars printed
  */
 int print_hexadecima(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	return (print_hexa(type, "0123456789abcdef", buffer, flags, 'X',
-		percision, width, size));
+		precision, width, size));
 }
 
 /********** PRINT AN UNSIGNED NUMBER IN UPPER HEXADECIMAL **********/
@@ -104,16 +104,16 @@ int print_hexadecima(va_list types, char buffer[],
  * @buffer: The buffer array to handle print
  * @types: The list a of argument
  * @flags: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: The number of chars printed
  */
 int print_hexa_upper(va_list types, char buffer[],
-	int flags, int percision, int width, int size)
+	int flags, int precision, int width, int size)
 {
 	return (print_hexa(types, "0123456789ABCDEF", buffer,
-		flags, 'X', percision, width, size));
+		flags, 'X', precision, width, size));
 }
 
 /********** PRINT HEXA NUMBER IN UPPER OR LOWER **********/
@@ -124,13 +124,13 @@ int print_hexa_upper(va_list types, char buffer[],
  * @types: The list a of argument
  * @flags: This calculates active flags
  * @flag_ch: This calculates active flags
- * @percision: The percision specification
+ * @precision: The precision specification
  * @width: The get width
  * @size: The size specifier
  * Return: The number of chars printed
  */
 int print_hexa(va_list types, char map_to[], char buffer[],
-	int flags, char flag_ch, int percision, int width, int size)
+	int flags, char flag_ch, int precision, int width, int size)
 {
 	int i = BUFF_SIZE - 2;
 	unsigned long int num = va_arg(types, unsigned long int);
@@ -159,5 +159,5 @@ int print_hexa(va_list types, char map_to[], char buffer[],
 
 	i++;
 
-	return (write_unsgnd(0, i, buffer, flags, percision, width, size));
+	return (write_unsgnd(0, i, buffer, flags, precision, width, size));
 }
