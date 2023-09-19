@@ -26,8 +26,8 @@ int print_string(va_list types, char buffer[],
 	if (str == NULL)
 	{
 		str = "(null)";
-		if (percision >= 6)
-			str = "    ";
+		if (precision >= 6)
+			str = " ";
 	}
 
 	while (str[length] != '\0')
@@ -144,7 +144,7 @@ int print_percent(va_list types, char buffer[],
  * @size: The size specifier
  * Return: the numbers of chars printed.
  */
-int print_inary(va_lsit types, char buffer[],
+int print_inary(va_list types, char buffer[],
 	int flags, int precision, int width, int size)
 {
 	unsigned int n, m, i, sum;

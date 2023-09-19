@@ -14,7 +14,7 @@
 int print_pointer(va_list types, char buffer[],
 	int flags, int precision, int width, int size)
 {
-	char extra_c = 0, padd = '';
+	char extra_c = 0, padd = ' ';
 	int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /*length=2, for '0x'*/
 
 	unsigned long num_addrs;
@@ -44,7 +44,7 @@ int print_pointer(va_list types, char buffer[],
 	if (flags & F_PLUS)
 		extra_c = '+', length++;
 	else if (flags & F_SPACE)
-		extra_c = '', length++;
+		extra_c = ' ', length++;
 
 	ind++;
 
@@ -74,7 +74,7 @@ int print_non_printable(va_list types, char buffer[],
 	UNUSED(flags);
 	UNUSED(precision);
 	UNUSED(width);
-	UNUSE(size);
+	UNUSED(size);
 
 	if (str == NULL)
 		return (write(1, "(null)", 6));
@@ -119,9 +119,9 @@ int print_reverse(va_list types, char buffer[],
 
 	if (str == NULL)
 	{
-		UNUSED(precision)
-
-			str = ")Null(";
+		UNUSED(precision);
+		
+		str = ")Null(";
 	}
 	for (i = 0; str[i]; i++)
 		;

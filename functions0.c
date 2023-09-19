@@ -90,10 +90,10 @@ int print_octal(va_list types, char buffer[],
  * @size: The size specifier
  * Return: number of chars printed
  */
-int print_hexadecima(va_list types, char buffer[],
+int print_hexadecimal(va_list types, char buffer[],
 	int flags, int precision, int width, int size)
 {
-	return (print_hexa(type, "0123456789abcdef", buffer, flags, 'X',
+	return (print_hexa(types, "0123456789abcdef", buffer, flags, 'X',
 		precision, width, size));
 }
 
