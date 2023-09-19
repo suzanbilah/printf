@@ -1,95 +1,67 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
+
+void print_buffer(char buffer[], int *buff_ind);
 
 /**
- * _printf - Custom printf function that handles %s, %c, and %%
- * @format: The format string.
- *
- * Return: The number of characters printed.
- */
+* Function: _printf
+* Description: Custom printf function
+* Parameters:
+* @format: format string
+* 
+* Returns the count of characters printed
+*/
+
 int _printf(const char *format, ...)
 {
-	va_list args;
-
-	va_start(args, format);
-
-	int char_count = 0;
-
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			switch (*format)
-			{
-				case 's':
-					char_count += handle_string(&args);
-					break;
-				case 'c':
-					char_count += handle_char(&args);
-					break;
-				case '%':
-					putchar('%');
-					char_count++;
-					break;
-				default:
-					break;
-			}
-		}
-		else
-		{
-			putchar(*format);
-			char_count++;
-		}
-		format++;
-	}
-
-	va_end(args);
-
-	return (char_count);
-}
-
-/**
- * handle_string - Handles %s format specifier.
- * @args: The va_list containing the arguments.
- *
- * Return: The number of characters printed.
- */
-int handle_string(va_list *args)
+int i, printed = 0, printed_chars = 0;
+int flags, width, precision, size, buff_ind = 0;
+va_list list;
+char buffer[BUFF_SIZE];
+if (format == NULL)
+return (-1);
+va_start(list, format);
+for (i = 0; format && format[i] != '\0'; i++)
 {
-	char *str = va_arg(*args, char *);
-
-	return (printf("%s", str));
-}
-
-/**
- * handle_char - Handles %c format specifier.
- * @args: The va_list containing the arguments.
- *
- * Return: The number of characters printed.
- */
-
-int handle_char(va_list *args)
+if (format[i] != '%')
 {
-	char c = va_arg(*args, int);
+buffer[buff_ind++] = format[i];
+if (buff_ind == BUFF_SIZE)
+print_buffer(buffer, &buff_ind);
 
-	return (printf("%c", c));
+printed_chars++;
 }
-
-/**
- * main - Entry point of the program.
- *
- * Return: Always 0 (success).
- */
-int main(void)
+else
 {
-	char name[] = "John";
-	char character = 'A';
+print_buffer(buffer, &buff_ind);
+flags = get_flags(format, &i);
+width = get_width(format, &i, list);
+precision = get_precision(format, &i, list);
+size = get_size(format, &i);
+++i;
+printed = handle_print(format, &i, list, buffer,
+flags, width, precision, size);
+if (printed == -1)
+return (-1);
+printed_chars += printed;
+}
+}
+print_buffer(buffer, &buff_ind);
+va_end(list);
+return (printed_chars);
+}
+/**
+* Function: print_buffer
+* ----------------------
+* Description: If a buffer exists, this function prints its contents.
+*
+* Parameters:
+* - buffer: An array of characters.
+* - buff_ind: The index indicating where the next character will be added, also representing the length.
+*/
 
-	_printf("Hello, %s!\n", name);
-	_printf("My favorite character is %c.\n", character);
-	_printf("This is a %% character.\n");
-
-	return (0);
+void print_buffer(char buffer[], int *buff_ind)
+{
+if (*buff_ind > 0)
+write(1, &buffer[0], *buff_ind);
+*buff_ind = 0;
 }
