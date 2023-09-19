@@ -144,7 +144,7 @@ int print_percent(va_list types, char buffer[],
  * @size: The size specifier
  * Return: the numbers of chars printed.
  */
-int print_inary(va_list types, char buffer[],
+int print_binary(va_list types, char buffer[],
 	int flags, int precision, int width, int size)
 {
 	unsigned int n, m, i, sum;
