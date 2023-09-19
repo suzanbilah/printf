@@ -1,51 +1,95 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 /**
- * _printf - formatted output conversion and print data.
- * @format: input string.
+ * _printf - Custom printf function that handles %s, %c, and %%
+ * @format: The format string.
  *
- * Return: number of chars printed.
+ * Return: The number of characters printed.
  */
 int _printf(const char *format, ...)
 {
-	unsigned int i = 0, len = 0, ibuf = 0;
-	va_list arguments;
-	int (*function)(va_list, char *, unsigned int);
-	char *buffer;
+	va_list args;
 
-	va_start(arguments, format), buffer = malloc(sizeof(char) * 1024);
-	if (!format || !buffer || (format[i] == '%' && !format[i + 1]))
-		return (-1);
-	if (!format[i])
-		return (0);
-	for (i = 0; format && format[i]; i++)
+	va_start(args, format);
+
+	int char_count = 0;
+
+	while (*format)
 	{
-		if (format[i] == '%')
+		if (*format == '%')
 		{
-			if (format[i + 1] == '\0')
-			{	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
-				return (-1);
+			format++;
+			switch (*format)
+			{
+				case 's':
+					char_count += handle_string(&args);
+					break;
+				case 'c':
+					char_count += handle_char(&args);
+					break;
+				case '%':
+					putchar('%');
+					char_count++;
+					break;
+				default:
+					break;
 			}
-			else
-			{	function = get_print_func(format, i + 1);
-				if (function == NULL)
-				{
-					if (format[i + 1] == ' ' && !format[i + 2])
-						return (-1);
-					handl_buf(buffer, format[i], ibuf), len++, i--;
-				}
-				else
-				{
-					len += function(arguments, buffer, ibuf);
-					i += ev_print_func(format, i + 1);
-				}
-			} i++;
 		}
 		else
-			handl_buf(buffer, format[i], ibuf), len++;
-		for (ibuf = len; ibuf > 1024; ibuf -= 1024)
-			;
+		{
+			putchar(*format);
+			char_count++;
+		}
+		format++;
 	}
-	print_buf(buffer, ibuf), free(buffer), va_end(arguments);
-	return (len);
+
+	va_end(args);
+
+	return (char_count);
+}
+
+/**
+ * handle_string - Handles %s format specifier.
+ * @args: The va_list containing the arguments.
+ *
+ * Return: The number of characters printed.
+ */
+int handle_string(va_list *args)
+{
+	char *str = va_arg(*args, char *);
+
+	return (printf("%s", str));
+}
+
+/**
+ * handle_char - Handles %c format specifier.
+ * @args: The va_list containing the arguments.
+ *
+ * Return: The number of characters printed.
+ */
+
+int handle_char(va_list *args)
+{
+	char c = va_arg(*args, int);
+
+	return (printf("%c", c));
+}
+
+/**
+ * main - Entry point of the program.
+ *
+ * Return: Always 0 (success).
+ */
+int main(void)
+{
+	char name[] = "John";
+	char character = 'A';
+
+	_printf("Hello, %s!\n", name);
+	_printf("My favorite character is %c.\n", character);
+	_printf("This is a %% character.\n");
+
+	return (0);
 }
