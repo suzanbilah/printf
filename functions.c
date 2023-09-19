@@ -111,3 +111,70 @@ int print_int(va_list types, char buffer[],
 
 	return (write_number(is_negative, i, buffer, flags, percision, width, size));
 }
+/********** PRINT A precent sign **********/
+/**
+ * print_percent - A function that prints a percent sign
+ * @buffer: The buffer array to handle print
+ * @types: The list a of arguments
+ * @flags: This calculates active flags
+ * @percision: The percision specification
+ * @width: The getbwidth
+ * @size: The size specifier
+ */
+int print_percent(va_list types, char buffer[],
+	int flags, int percision, int width, int size)
+{
+	UNUSED(types);
+	UNUSED(buffer);
+	UNUSED(flags);
+	UNUSED(percision);
+	UNUSED(width);
+	UNUSED(size);
+	return (write(1, "%%", 1));
+}
+
+/********** PRINT A BINARY **********/
+/**
+ * print_binary - A function that prints an unsigned number
+ * @buffer: The buffer array to handle print
+ * @types: The list of arguments
+ * @flags: This calculates active flags
+ * @percision: The precision specification
+ * @width: The get width
+ * @size: The size specifier
+ * Return: the numbers of chars printed.
+ */
+int print_inary(va_lsit types, char buffer[],
+	int flags, int percision, int width, int size)
+{
+	unsigned int n, m, i, sum;
+	unsigned int a[32];
+	int count;
+
+	UNUSED(buffer);
+	UNUSED(flags);
+	UNUSED(percision);
+	UNUSED(width);
+	UNUSED(size);
+
+	n = va_arg(types, unsigned int);
+	m = 2147483648; /* (2 ^ 31) */
+	a[0] = n / m;
+	for (i = 1; i < 32; i++)
+	{
+		m /= 2;
+		a[i] = (n / m) % 2;
+	}
+	for (i = 0, sum = 0, count = 9; i < 32; i++)
+	{
+		sum += a[i];
+		if (sum || i == 31)
+		{
+			char z = '0' + a[i];
+
+			write(1, &z, 1);
+			count++;
+		}
+	}
+	return (count);
+}
