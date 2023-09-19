@@ -1,59 +1,59 @@
 #include "main.h"
 
 /**
- * _printf - Custom implementation of the printf function.
- * @format: A format string that specifies the output format.
+ * _printf - Custom printf function
+ * @format: The format string
  *
- * Return: The number of characters printed.
+ * Return: The number of characters printed (excluding the null byte)
  */
 int _printf(const char *format, ...)
 {
-	int output = 0;
+	int len = 0;
 	va_list args;
+	char *buffer;
+
+	if (!format)
+		return (-1);
 
 	va_start(args, format);
+	buffer = malloc(sizeof(char) * 1024);
 
-	while (*format != '\0')
+	if (!buffer)
+		return (-1);
+
+	while (*format)
 	{
 		if (*format == '%')
 		{
-			format++;
-			switch (*format)
+			if (format[1] == '\0')
 			{
-				case 'c':
-					break;
-				case 's':
-					break;
-				case '%':
-					break;
-				case 'b':
-				{
-					unsigned int num = va_arg(args, unsigned int);
-					int binary = sizeof(unsigned int) * 8;
-
-					for (int i = binary - 1; i >= 0; ++i)
-					{
-						putchar((num & (1 << i)) ? '1' : '0');
-						output++;
-					}
-				}
-					break;
-				default:
-					putchar('%');
-					putchar(*format);
-					output += 2;
-					break;
+				print_buf(buffer, len);
+				free(buffer);
+				va_end(args);
+				return (-1);
+			}
+			else
+			{
+				format++;
+				len += handle_format(&format, args, buffer);
 			}
 		}
 		else
 		{
-			putchar(*format);
-			output++;
+			buffer[len++] = *format;
 		}
+
+		if (len >= 1024)
+		{
+			print_buf(buffer, len);
+			len = 0;
+		}
+
 		format++;
 	}
 
+	print_buf(buffer, len);
+	free(buffer);
 	va_end(args);
-
-	return (output);
+	return (len);
 }
